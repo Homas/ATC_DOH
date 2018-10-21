@@ -4,8 +4,11 @@ https://ipvm.biz/atc?name=google.com
 
 ```
 sudo docker build -t pvmdel/atc_doh:latest .
-sudo docker run -d --name doh.ioc2rpz.com --log-driver=syslog --restart always --mount type=bind,source=/opt_data/doh,target=/opt/doh/ssl -p80:80 -p443:443 --log-opt tag="{{.ID}}/{{.Name}}" --env HOSTN="doh.ioc2rpz.com" pvmdel/atc_doh:latest	
-sudo docker exec -it d33e2363a789 bash
+sudo docker run -d --name doh.ioc2rpz.com --log-driver=syslog --restart always --mount type=bind,source=/opt_data/doh,target=/opt/doh/ssl -p80:80 -p443:443 --log-opt tag="{{.ID}}/{{.Name}}" --env HOSTN="doh.ioc2rpz.com" --env EMAIL="pvm_job@mail.ru" pvmdel/atc_doh:latest	
+sudo docker exec -it doh.ioc2rpz.com bash
+sudo docker stop doh.ioc2rpz.com
+sudo docker rm doh.ioc2rpz.com
+sudo docker run -it --entrypoint=bash -p80:80 pvmdel/atc_doh
 ```
 
 # DOH Server
