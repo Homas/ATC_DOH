@@ -8,7 +8,8 @@ sudo docker run -d --name doh.ioc2rpz.com --log-driver=syslog --restart always -
 sudo docker exec -it doh.ioc2rpz.com bash
 sudo docker stop doh.ioc2rpz.com
 sudo docker rm doh.ioc2rpz.com
-sudo docker run -it --entrypoint=bash -p80:80 pvmdel/atc_doh
+
+sudo docker run -it --entrypoint=bash -p80:80 -p443:443 --env HOSTN="doh.ioc2rpz.com" --env EMAIL="pvm_job@mail.ru" pvmdel/atc_doh
 ```
 
 # DOH Server
