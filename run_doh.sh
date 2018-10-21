@@ -5,6 +5,10 @@
 SYSUSER=`whoami | awk '{print $1}'`
 DOH_ROOT="/opt/doh"
 
+if [ -z "$PREFIX" ]; then
+	PREFIX="atc"
+fi
+
 if [ ! -f $DOH_ROOT/ssl/doh.crt ]; then
 	certbot -n certonly --standalone -d $HOST --agree-tos --email $EMAIL
 	cp /etc/letsencrypt/live/$HOST/fullchain.pem $DOH_ROOT/ssl/doh.crt
@@ -16,7 +20,7 @@ if [ ! -f $DOH_ROOT/etc/doh-server.conf ]; then
 listen = ["172.17.0.2:443",]
 cert = "$DOH_ROOT/ssl/doh.crt"
 key = "$DOH_ROOT/ssl/doh.key"
-path = "/atc"
+path = "/$PREFIX"
 upstream = ["52.119.40.100:53","52.119.40.101:53",]
 timeout = 60
 tries = 10
