@@ -20,9 +20,18 @@ EOF
 fi
 
 if [ ! -f $DOH_ROOT/ssl/doh.crt ]; then
-	certbot -n certonly --standalone -d $HOSTN --agree-tos --email $EMAIL
-	cp /etc/letsencrypt/live/doh.ioc2rpz.com/fullchain.pem $DOH_ROOT/ssl/doh.crt
-	cp /etc/letsencrypt/live/doh.ioc2rpz.com/privkey.pem $DOH_ROOT/ssl/doh.key
+	certbot -n certonly --standalone -d $HOST --agree-tos --email $EMAIL
+	cp /etc/letsencrypt/live/$HOST/fullchain.pem $DOH_ROOT/ssl/doh.crt
+	cp /etc/letsencrypt/live/$HOST/privkey.pem $DOH_ROOT/ssl/doh.key
+
+	cat >> /tmp/$SYSUSER  << EOF
+### Renew certificates
+42 0,12 * * * python -c 'import random; import time; time.sleep(random.random() * 3600)' && /usr/bin/certbot renew && if ! cmp -s /etc/letsencrypt/live/$HOST/fullchain.pem $DOH_ROOT/ssl/doh.crt; then cp /etc/letsencrypt/live/$HOST/fullchain.pem $DOH_ROOT/ssl/doh.crt && cp /etc/letsencrypt/live/$HOST/privkey.pem $DOH_ROOT/ssl/doh.key && killall -9 doh-server; fi
+EOF
+
 fi
+
+#/usr/bin/certbot renew
+#
 
 $DOH_ROOT/bin/doh-server -conf $DOH_ROOT/etc/doh-server.conf
