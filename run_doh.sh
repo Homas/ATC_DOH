@@ -1,4 +1,5 @@
 #!/bin/bash
+#Copyright 2018 Vadim Pavlov ioc2rpz[at]gmail[.]com
 #ATC DOH start script
 
 SYSUSER=`whoami | awk '{print $1}'`
