@@ -55,7 +55,7 @@ To debug ATC_DOH you may use:
 - To access the container you may use the following command ```sudo docker exec -it atc_doh bash```
 
 # DOH Server
-ATC_DOH uses opensource [DOH Server](https://github.com/m13253/dns-over-https/)
+ATC_DOH uses opensource [DOH Proxy](https://github.com/m13253/dns-over-https/)
 
 # License
 Copyright 2018 Vadim Pavlov ioc2rpz[at]gmail[.]com
