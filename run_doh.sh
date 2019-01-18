@@ -35,5 +35,7 @@ EOF
 
 fi
 
+crontab /tmp/$SYSUSER
+
 crond
 $DOH_ROOT/bin/doh-server -conf $DOH_ROOT/etc/doh-server.conf
